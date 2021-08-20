@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Dealership Review</title>
     {% load static %}
-    <script src="{% static '/custom/js/main.js' %}" type="text/javascript"></script>
-    <script src="{% static '/custom/js/owl.carousel.min.js' %}" type="text/javascript"></script>
-    <script src="{% static '/custom/js/jquery.sticky.js' %}" type="text/javascript"></script>
+    <script src="{% static './custom/js/main.js' %}" type="text/javascript"></script>
+    <script src="{% static './custom/js/owl.carousel.min.js' %}" type="text/javascript"></script>
+    <script src="{% static './custom/js/jquery.sticky.js' %}" type="text/javascript"></script>
 
     <link rel="stylesheet" href="{% static './custom/css/owl.carousel.min.css' %}"> 
     <link rel="stylesheet" href="{% static './custom/css/style.css' %}"> 
-    <link rel="stylesheet" href="{% static './custom/css/about.css' %}"> 
+    <link rel="stylesheet" href="{% static './custom/css/about.css' %}">
+    <link rel="stylesheet" href="{% static './custom/fonts/icomoon/style.css' %}"> 
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -24,89 +25,41 @@
 </head>
 <body>
     <!--Add a nav bar here -->
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Best Cars</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                <li>
-                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-                    <a class="btn btn-link" href="#">Logout</a>
-                </li>
-                {% else %}
-                <li>
-                    <form class="form-inline" action="#" method="post">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" >
-                            <input type="password" class="form-control" placeholder="Password" name="psw" >
-                            <button class="btn btn-primary" type="submit">Login</button>
-                            <a class="btn btn-link" href="#">Sign Up</a>
-                        </div>
-                    </form>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-    <!--Add a dealer table here -->
-    <div class="aboutus-section">
+      <header class="site-navbar site-navbar-target" role="banner">
+
         <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="aboutus">
-                        <h2 class="aboutus-title">About Us</h2>
-                        <p class="aboutus-text">Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
-                        <p class="aboutus-text">This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem</p>
-                        <a class="aboutus-more" href="#">read more</a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="aboutus-banner">
-                    </div>
-                </div>
-                <div class="col-md-5 col-sm-6 col-xs-12">
-                    <div class="feature">
-                        <div class="feature-box">
-                            <div class="clearfix">
-                                <div class="iconset">
-                                    <span class="glyphicon glyphicon-cog icon"></span>
-                                </div>
-                                <div class="feature-content">
-                                    <h4>Work with heart</h4>
-                                    <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="clearfix">
-                                <div class="iconset">
-                                    <span class="glyphicon glyphicon-cog icon"></span>
-                                </div>
-                                <div class="feature-content">
-                                    <h4>Reliable services</h4>
-                                    <p>Donec vitae sapien ut libero venenatis faucibu. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="clearfix">
-                                <div class="iconset">
-                                    <span class="glyphicon glyphicon-cog icon"></span>
-                                </div>
-                                <div class="feature-content">
-                                    <h4>Great support</h4>
-                                    <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="row align-items-center position-relative">
+
+            <div class="col-3">
+              <div class="site-logo">
+                <a href="{% url 'djangoapp:index' %}" class="font-weight-bold"><img src="{% static './custom/images/logo.png' %}" width="200px" height="50px"></a>
+              </div>
             </div>
+
+            <div class="col-9  text-right">
+              
+
+              <span class="d-inline-block d-lg-none"><a href="#" class="text-primary site-menu-toggle js-menu-toggle py-5"><span class="icon-menu h3 text-white"></span></a></span>
+
+
+              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                  <li class="active"><a href="#" class="nav-link">Home</a></li>
+                  <li><a href="{% url 'djangoapp:about' %}" class="nav-link">About Us</a></li>
+                  <li><a href="{% url 'djangoapp:contact' %}" class="nav-link">Contact Us</a></li>
+                </ul>
+              </nav>
+            </div>
+
+            
+          </div>
         </div>
-    </div>
+
+      </header>
+
+    <div class="hero"></div>
+    <!--Add a dealer table here -->
+ 
 
 </body>
 

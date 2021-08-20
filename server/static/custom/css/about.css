@@ -1,9 +1,6 @@
-body {
-    font-family: 'Roboto';font-size: 16px;
-}
-
 .aboutus-section {
     padding: 90px 0;
+    background-color: #F0F0F0;
 }
 .aboutus-title {
     font-size: 30px;
@@ -16,7 +13,7 @@ body {
     color: #000;
 }
 .aboutus-title::after {
-    background: #fdb801 none repeat scroll 0 0;
+    background: #eb4d55 none repeat scroll 0 0;
     bottom: 0;
     content: "";
     height: 2px;
@@ -25,9 +22,9 @@ body {
     width: 54px;
 }
 .aboutus-text {
-    color: #606060;
-    font-size: 13px;
-    line-height: 22px;
+    color: #2D3136;
+    font-size: 34px;
+    line-height: 50px;
     margin: 0 0 35px;
 }
 
@@ -37,15 +34,19 @@ a:hover, a:active {
     outline: 0;
 }
 .aboutus-more {
-    border: 1px solid #fdb801;
+    border: 1px solid #eb4d55;
     border-radius: 25px;
-    color: #fdb801;
+    color: #eb4d55;
     display: inline-block;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0;
     padding: 7px 20px;
     text-transform: uppercase;
+}
+.aboutus-more:hover {
+    background-color: #eb4d55;
+    color: #fff;
 }
 .feature .feature-box .iconset {
     background: #fff none repeat scroll 0 0;
@@ -54,7 +55,7 @@ a:hover, a:active {
     width: 18%;
 }
 .feature .feature-box .iconset::after {
-    background: #fdb801 none repeat scroll 0 0;
+    background: #eb4d55 none repeat scroll 0 0;
     content: "";
     height: 150%;
     left: 43%;
@@ -90,7 +91,7 @@ a:hover, a:active {
     line-height: 22px;
 }
 .icon {
-    color : #f4b841;
+    color : #eb4d55;
     padding:0px;
     font-size:40px;
     border: 1px solid #fdb801;
