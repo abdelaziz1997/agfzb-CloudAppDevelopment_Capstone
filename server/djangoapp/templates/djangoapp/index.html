@@ -49,16 +49,26 @@
                   <li class="active"><a href="#" class="nav-link">Home</a></li>
                   <li><a href="{% url 'djangoapp:about' %}" class="nav-link">About Us</a></li>
                   <li><a href="{% url 'djangoapp:contact' %}" class="nav-link">Contact Us</a></li>
-                  <form action="{% url 'djangoapp:contact' %}" class="login-container text-right ml-auto d-none d-lg-block">
+                {% if user.is_authenticated %}
+                    <li style="float: right;padding-right: 150px;">
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                <form action="{% url 'djangoapp:signup' %}" method="POST" class="login-container text-right ml-auto d-none d-lg-block">
+                    {% csrf_token %}
                     <button type="submit" class="btn btn-custom-reverse" >Sign Up</button>
                 </form>
-                  <form action="{% url 'djangoapp:login' %}" class="login-container text-right ml-auto d-none d-lg-block">
+                
+                <form action="{% url 'djangoapp:login' %}" method="POST" class="login-container text-right ml-auto d-none d-lg-block">
+                    {% csrf_token %}
                     <input type="text" placeholder="Username" name="username" class="form-control">
-                    <input type="text" placeholder="Password" name="psw" class="form-control">
+                    <input type="text" placeholder="Password" name="pwd" class="form-control">
+                    
                     <button type="submit" class="btn btn-custom">Login</button>
                 </form>
                 
-
+                {% endif %}
 
 
                 </ul>
