@@ -1,11 +1,11 @@
   applications:
   - name: djangoapp
     routes:
-      - route: aelh.eu-gb.cf.appdomain.cloud
+      - route: aelha.eu-gb.cf.appdomain.cloud
     memory: 128M
     buildpack: python_buildpack
   - name: djangoapp-nginx
     routes:
-      - route: aelh.eu-gb.cf.appdomain.cloud/static
+      - route: aelha.eu-gb.cf.appdomain.cloud/static
     memory: 128M
     buildpack: staticfile_buildpack
