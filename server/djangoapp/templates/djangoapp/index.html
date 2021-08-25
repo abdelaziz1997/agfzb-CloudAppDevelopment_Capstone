@@ -55,8 +55,7 @@
                         <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                     </li>
                 {% else %}
-                <form action="{% url 'djangoapp:signup' %}" method="POST" class="login-container text-right ml-auto d-none d-lg-block">
-                    {% csrf_token %}
+                <form action="{% url 'djangoapp:signup' %}" method="GET" class="login-container text-right ml-auto d-none d-lg-block">
                     <button type="submit" class="btn btn-custom-reverse" >Sign Up</button>
                 </form>
                 
