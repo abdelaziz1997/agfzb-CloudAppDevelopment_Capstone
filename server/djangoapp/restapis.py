@@ -8,23 +8,40 @@ from requests.auth import HTTPBasicAuth
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
-    print(kwargs)
+    
     print("GET from {} ".format(url))
     try:
-        
-        # Without Authentication
-        print("NOOOOOO API_KEEEEEEY")
-        response = requests.get(url, 
-                                headers={'Content-Type': 'application/json'}, 
-                                params=kwargs)
+        if "api_key" in kwargs:
+            # With Authentication
+            params = dict()
+            print("API_KEEEEEEY")
+            params["text"] = kwargs.get("text")
+            params["version"] = kwargs.get("version")
+            params["features"] = kwargs.get("features")
+            params["return_analyzed_text"] = kwargs.get("return_analyzed_text")
+            print(kwargs.get("api_key"))
+            response = requests.get(url, 
+                                    headers={'Content-Type': 'application/json'}, 
+                                    params=params,
+                                    auth=HTTPBasicAuth("apikey",kwargs.get("api_key")))
+            print("RESPONSEEEEEEE")
+            print(response)
+        else:
+            # Without Authentication
+            print("NOOOOOO API_KEEEEEEY")
+            response = requests.get(url, 
+                                    headers={'Content-Type': 'application/json'}, 
+                                    params=kwargs)
+        status_code = response.status_code
+        print("With status {} ".format(status_code))
+        json_data = json.loads(response.text)
+        return json_data
 
     except:
         # If any error occurs
         print("Network exception occurred")
-    status_code = response.status_code
-    print("With status {} ".format(status_code))
-    json_data = json.loads(response.text)
-    return json_data
+        return{'error':"Network Error"}
+        
 
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
@@ -114,11 +131,11 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(dealer_review):
     results = "heelo"
-    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/76e6f0aa-6b74-4e4b-9ca3-1ed40a9c2460"
+    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/ce05314f-896d-4384-bdc5-9b0c815796b4"
 
     
     # Call get_request with a URL parameter and Watson NLU parameters
-    json_result = get_request(api_url,  api_key="V9RRtCscNO0Aj82Ws5Ac_JL4B_5fi_rZPDP_v6HGgUPM",
+    json_result = get_request(api_url,  api_key="FXkmOfL3GZCCjhPaHustbo5Wvg4akSwBRWBwxR76h892",
                                         version="2021-05-24",
                                         text=dealer_review,
                                         features="sentiment",
