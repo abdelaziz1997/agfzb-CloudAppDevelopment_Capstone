@@ -4,7 +4,6 @@ import json
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 
-
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
@@ -12,23 +11,12 @@ def get_request(url, **kwargs):
     print(kwargs)
     print("GET from {} ".format(url))
     try:
-        if api_key:
-            # With Authentication
-            params = dict()
-            params["text"] = kwargs["text"]
-            params["version"] = kwargs["version"]
-            params["features"] = kwargs["features"]
-            params["return_analyzed_text"] = kwargs["return_analyzed_text"]
-            response = requests.get(url, 
-                                    headers={'Content-Type': 'application/json'}, 
-                                    params=params,
-                                    auth=HTTPBasicAuth('apikey',api_key))
         
-        else:
-            # Without Authentication
-            response = requests.get(url, 
-                                    headers={'Content-Type': 'application/json'}, 
-                                    params=kwargs)
+        # Without Authentication
+        print("NOOOOOO API_KEEEEEEY")
+        response = requests.get(url, 
+                                headers={'Content-Type': 'application/json'}, 
+                                params=kwargs)
 
     except:
         # If any error occurs
@@ -115,7 +103,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                                     car_make=review["car_make"],
                                     car_model=review["car_model"], 
                                     car_year=review["car_year"],
-                                    sentiment=review['name'])
+                                    sentiment=analyze_review_sentiments(review["review"]))
             results.append(review_obj)
 
     return results
@@ -124,7 +112,36 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-#def analyze_review_sentiments(dealer_review):
+def analyze_review_sentiments(dealer_review):
+    results = "heelo"
+    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/76e6f0aa-6b74-4e4b-9ca3-1ed40a9c2460"
 
+    
+    # Call get_request with a URL parameter and Watson NLU parameters
+    json_result = get_request(api_url,  api_key="V9RRtCscNO0Aj82Ws5Ac_JL4B_5fi_rZPDP_v6HGgUPM",
+                                        version="2021-05-24",
+                                        text=dealer_review,
+                                        features="sentiment",
+                                        return_analyzed_text=True)
+    if json_result:
+        print(json_result)
+        # Get the row list in JSON as dealers
+        #reviews = json_result["docs"]
+        # For each dealer object
+        #for review in reviews:
+            # Create a CarDealer object with values in `doc` object
+            #review_obj = DealerReview( dealership=review["dealership"], 
+                                    #name=review["name"], 
+                                    #purchase=review["purchase"],
+                                    #id=review["id"], 
+                                    #review=review["review"], 
+                                    #purchase_date=review["purchase_date"],
+                                    #car_make=review["car_make"],
+                                    #car_model=review["car_model"], 
+                                    #car_year=review["car_year"],
+                                    #sentiment=review['name'])
+            #results.append(review_obj)
+
+    return results
 
 
