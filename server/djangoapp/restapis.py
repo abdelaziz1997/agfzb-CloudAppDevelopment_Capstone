@@ -14,15 +14,15 @@ def get_request(url, **kwargs):
         if "api_key" in kwargs:
             # With Authentication
             params = dict()
-            print("API_KEEEEEEY")
             params["text"] = kwargs.get("text")
             params["version"] = kwargs.get("version")
             params["features"] = kwargs.get("features")
             params["return_analyzed_text"] = kwargs.get("return_analyzed_text")
+            print(params)
             print(kwargs.get("api_key"))
             response = requests.get(url, 
-                                    headers={'Content-Type': 'application/json'}, 
                                     params=params,
+                                    headers={'Content-Type': 'application/json'}, 
                                     auth=HTTPBasicAuth("apikey",kwargs.get("api_key")))
             print("RESPONSEEEEEEE")
             print(response)
@@ -45,7 +45,26 @@ def get_request(url, **kwargs):
 
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
+def post_request(url, **kwargs):
+    print("POST to {} ".format(url))
+    try:
+        print(kwargs)
+        response = requests.post(url, 
+                                params=kwargs,
+                                json=kwargs.get("json_payload"))
+        print("RESPONSEEEEEEE")
+        print(response)
+        
+           
+        status_code = response.status_code
+        print("With status {} ".format(status_code))
+        json_data = json.loads(response.text)
+        return json_data
 
+    except:
+        # If any error occurs
+        print("Network exception occurred")
+        return{'error':"Network Error"}
 
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
@@ -139,7 +158,7 @@ def analyze_review_sentiments(dealer_review):
                                         version="2021-05-24",
                                         text=dealer_review,
                                         features="sentiment",
-                                        return_analyzed_text=True)
+                                        return_analyzed_text=False)
     if json_result:
         print(json_result)
         # Get the row list in JSON as dealers
