@@ -119,15 +119,24 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
-    if request.method == 'POST' and request.user.is_authenticated:
-        review = dict()
-        review["time"] = datetime.utcnow().isoformat()
-        review["dealership"] = 11
-        review["review"] = "This is a great car dealer"
-        review["purchase"] = True
-        review["name"] = "Abdelaziz El Hassouni"
-        json_payload = dict()
-        json_payload["review"] = review
-        response = post_request(base_url + dealerReviewsPath , json_payload, dealerId = dealer_id)
-        return HttpResponse(response)
+    context = {}
+    review = dict()
+    review["id"] = 111
+    review["another"] = "field"
+    review["purchase_date"] = "02/16/2021"
+    review["car_make"] = "Audi"
+    review["car_model"] = "Car"
+    review["car_year"] = 2021
+    review["dealership"] = dealer_id
+    review["review"] = "This is a great car dealer"
+    review["purchase"] = False
+    review["name"] = "Abdelaziz El Hassouni"
+    json_payload = dict()
+    json_payload["review"] = review
+    print("IN THE VIEWS")
+    print(json_payload)
+    url = base_url + dealerReviewsPath
+    response = post_request(json_payload,url,dealerId = dealer_id)
+    return HttpResponse(response)
+    
 

@@ -21,9 +21,9 @@ def get_request(url, **kwargs):
             print(params)
             print(kwargs.get("api_key"))
             response = requests.get(url, 
-                                    params=params,
                                     headers={'Content-Type': 'application/json'}, 
-                                    auth=HTTPBasicAuth("apikey",kwargs.get("api_key")))
+                                    params=params,
+                                    auth=HTTPBasicAuth("apikey",str(kwargs.get("api_key"))))
             print("RESPONSEEEEEEE")
             print(response)
         else:
@@ -45,13 +45,12 @@ def get_request(url, **kwargs):
 
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
-def post_request(url, **kwargs):
-    print("POST to {} ".format(url))
+def post_request(json_payload , url, **kwargs):
     try:
-        print(kwargs)
         response = requests.post(url, 
+                                headers={'Content-Type': 'application/json'},
                                 params=kwargs,
-                                json=kwargs.get("json_payload"))
+                                json=json_payload)
         print("RESPONSEEEEEEE")
         print(response)
         
