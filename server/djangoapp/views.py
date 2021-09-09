@@ -110,11 +110,9 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         # Get dealer's reviews from the URL
         dealerReviews = get_dealer_reviews_from_cf(base_url + dealerReviewsPath, dealer_id)
-        # Concat all dealer's reviews
-        dealer_reviews = ' '.join([review.review for review in dealerReviews])
         # Return a list of dealer's reviews
         context['reviews'] = dealerReviews
-        return HttpResponse(dealer_reviews)
+        return render(request,'djangoapp/dealer_details.html', context)
 
 
 # Create a `add_review` view to submit a review

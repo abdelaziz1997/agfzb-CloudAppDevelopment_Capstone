@@ -138,6 +138,7 @@ iframe {
 
 .wrap-table100 {
   width: 1170px;
+  padding-bottom: 5px !important;
 }
 
 /*//////////////////////////////////////////////////////////////////
@@ -158,6 +159,7 @@ th, td {
 .column1 {
   width: 10%;
   text-align:center;
+  vertical-align:middle !important;
 }
 
 .column2 {
@@ -191,7 +193,6 @@ th, td {
 [ Fix header ]*/
 .table100 {
   position: relative;
-  padding-top: 60px;
 }
 
 .table100-head {
@@ -483,6 +484,7 @@ th, td {
   padding-top: 25px;
   padding-bottom: 25px;
 }
+
 
 /*---------------------------------------------*/
 

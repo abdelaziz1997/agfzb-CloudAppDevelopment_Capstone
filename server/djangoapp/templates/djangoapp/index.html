@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static './custom/css/about.css' %}">
     <link rel="stylesheet" href="{% static './custom/fonts/icomoon/style.css' %}"> 
     <link rel="stylesheet" href="{% static './custom/customtable/css/main.css' %}"> 
-    <link rel="stylesheet" href="{% static './custom/customtablecss/util.css' %}"> 
+    <link rel="stylesheet" href="{% static './custom/customtable/css/util.css' %}"> 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -92,42 +92,40 @@
         </div>
         <div class="wrap-table100">
             <div class="table100 ver1 m-b-110">
-                <div class="table100-head">
-                    <table>
-                        <thead>
-                            <tr class="row100 head">
-                                <th class="cell100 column1" data-field="id">ID</th>
-                                <th class="cell100 column1" data-field="name">Dealer Name</th>
-                                <th class="cell100 column1" data-field="city">City</th>
-                                <th class="cell100 column1" data-field="address">Address</th>
-                                <th class="cell100 column1" data-field="zip">Zip</th>
-                                <th class="cell100 column1" data-field="state">State</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-
-                <div class="table100-body js-pscroll">
-                    <table>
-                        <tbody>
-                            {% for dealer in dealers %}
-                            <tr class="row100 body">
-                                <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
-                                <td class="cell100 column1"><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.id}}</a></td>
-                                <td class="cell100 column1">{{dealer.full_name}}</td>
-                                <td class="cell100 column1">{{dealer.city}}</td>
-                                <td class="cell100 column1">{{dealer.address}}</td>
-                                <td class="cell100 column1">{{dealer.zip}}</td>
-                                <td class="cell100 column1">{{dealer.st}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table" id="table" data-filter-control="true">
+                    <thead>
+                        <tr class="row100 head">
+                            <th class="cell100 column1" data-field="id">ID</th>
+                            <th class="cell100 column1" data-field="name">Dealer Name</th>
+                            <th class="cell100 column1" data-field="city">City</th>
+                            <th class="cell100 column1" data-field="address">Address</th>
+                            <th class="cell100 column1" data-field="zip">Zip</th>
+                            <th class="cell100 column1" data-field="state" data-filter-control="select">State</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody class="table100-body js-pscroll">
+                        {% for dealer in dealers %}
+                        <tr class="row100 body">
+                            <td class="cell100 column1">{{dealer.id}}</td>
+                            <td class="cell100 column1"><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
+                            <td class="cell100 column1">{{dealer.city}}</td>
+                            <td class="cell100 column1">{{dealer.address}}</td>
+                            <td class="cell100 column1">{{dealer.zip}}</td>
+                            <td class="cell100 column1">{{dealer.st}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
         </div>
-    </div>
+        
+
 
 </body>
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>
 </html>
