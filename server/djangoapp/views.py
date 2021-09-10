@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-# from .models import related models
+from .models import CarModel
 from .restapis import get_dealers_from_cf, get_dealers_by_state, get_dealer_reviews_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -122,8 +122,11 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
     context = {}
-    #if(request.method == "GET"):
-     #   return
+    if(request.method == "GET"):
+        cars = CarModel.objects.filter(dealerId = dealer_id)
+        context['cars'] = cars
+        print(cars)
+        return render(request,'djangoapp/add_review.html', context)
     review = dict()
     review["id"] = 111
     review["another"] = "field"
@@ -141,6 +144,6 @@ def add_review(request, dealer_id):
     print(json_payload)
     url = base_url + dealerReviewsPath
     response = post_request(json_payload,url,dealerId = dealer_id)
-    return HttpResponse(response)
+    return render(request,'djangoapp/add_review.html', context)
     
 
