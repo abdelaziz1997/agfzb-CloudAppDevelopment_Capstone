@@ -74,21 +74,24 @@ def get_dealers_from_cf(url, **kwargs):
     # Call get_request with a URL parameter
     json_result = get_request(url)
     if json_result:
-        # Get the row list in JSON as dealers
-        dealers = json_result["docs"]
-        # For each dealer object
-        for dealer in dealers:
-            # Create a CarDealer object with values in `doc` object
-            dealer_obj = CarDealer( address=dealer["address"], 
-                                    city=dealer["city"], 
-                                    full_name=dealer["full_name"],
-                                    id=dealer["id"], 
-                                    lat=dealer["lat"], 
-                                    long=dealer["long"],
-                                    short_name=dealer["short_name"],
-                                    st=dealer["st"], 
-                                    zip=dealer["zip"])
-            results.append(dealer_obj)
+        if "docs" in json_result:
+            # Get the row list in JSON as dealers
+            dealers = json_result["docs"]
+            # For each dealer object
+            for dealer in dealers:
+                # Create a CarDealer object with values in `doc` object
+                dealer_obj = CarDealer( address=dealer["address"], 
+                                        city=dealer["city"], 
+                                        full_name=dealer["full_name"],
+                                        id=dealer["id"], 
+                                        lat=dealer["lat"], 
+                                        long=dealer["long"],
+                                        short_name=dealer["short_name"],
+                                        st=dealer["st"], 
+                                        zip=dealer["zip"])
+                results.append(dealer_obj)
+        else :
+            return {"error":"No dealers exists in the database"}
 
     return results
 
@@ -97,22 +100,24 @@ def get_dealers_by_state(url, st):
     # Call get_request with a URL parameter and state
     json_result = get_request(url, state=st)
     if json_result:
-        # Get the row list in JSON as dealers
-        dealers = json_result["docs"]
-        # For each dealer object
-        for dealer in dealers:
-            # Create a CarDealer object with values in `doc` object
-            dealer_obj = CarDealer( address=dealer["address"], 
-                                    city=dealer["city"], 
-                                    full_name=dealer["full_name"],
-                                    id=dealer["id"], 
-                                    lat=dealer["lat"], 
-                                    long=dealer["long"],
-                                    short_name=dealer["short_name"],
-                                    st=dealer["st"], 
-                                    zip=dealer["zip"])
-            results.append(dealer_obj)
-
+        if "docs" in json_result:
+            # Get the row list in JSON as dealers
+            dealers = json_result["docs"]
+            # For each dealer object
+            for dealer in dealers:
+                # Create a CarDealer object with values in `doc` object
+                dealer_obj = CarDealer( address=dealer["address"], 
+                                        city=dealer["city"], 
+                                        full_name=dealer["full_name"],
+                                        id=dealer["id"], 
+                                        lat=dealer["lat"], 
+                                        long=dealer["long"],
+                                        short_name=dealer["short_name"],
+                                        st=dealer["st"], 
+                                        zip=dealer["zip"])
+                results.append(dealer_obj)
+        else :
+            return {"error": "This state doesn't have any dealers"}
     return results
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
@@ -125,22 +130,25 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     json_result = get_request(url, dealerId=dealer_id)
     if json_result:
         # Get the row list in JSON as dealers
-        reviews = json_result["docs"]
-        # For each dealer object
-        for review in reviews:
-            # Create a CarDealer object with values in `doc` object
-            review_obj = DealerReview( dealership=review["dealership"], 
-                                    name=review["name"], 
-                                    purchase=review["purchase"],
-                                    id=review["id"], 
-                                    review=review["review"], 
-                                    purchase_date=review["purchase_date"],
-                                    car_make=review["car_make"],
-                                    car_model=review["car_model"], 
-                                    car_year=review["car_year"],
-                                    sentiment=analyze_review_sentiments(review["review"]))
-            results.append(review_obj)
-
+        if "docs" in json_result:
+            reviews = json_result["docs"]
+            # For each dealer object
+            for review in reviews:
+                # Create a CarDealer object with values in `doc` object
+                review_obj = DealerReview( dealership=review["dealership"], 
+                                        name=review["name"], 
+                                        purchase=review["purchase"],
+                                        id=review["id"], 
+                                        review=review["review"], 
+                                        purchase_date=review["purchase_date"],
+                                        purchase_year=review["purchase_year"],
+                                        car_make=review["car_make"],
+                                        car_model=review["car_model"], 
+                                        car_year=review["car_year"],
+                                        sentiment=analyze_review_sentiments(review["review"]))
+                results.append(review_obj)
+        else : 
+            return {"error": "The dealership doesn't have any reviews"}
     return results
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
