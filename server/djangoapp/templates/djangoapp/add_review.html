@@ -118,19 +118,8 @@
 											</div>
 											<div class="col-md-12"> 
 												<div class="form-group">
-													<input type="email" class="form-control" name="email" id="email" placeholder="Email">
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="submit" value="Send Message" class="btn btn-custom">
-													<div class="submitting"></div>
-												</div>
+                                                    <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+                                                </div>
 											</div>
 										</div>
 									</form>
@@ -144,4 +133,9 @@
 		</div>
 	</section>
     </body>
+    <script type="text/javascript">
+      $('.date-own').datepicker({
+         format: 'mm/dd/yyyy'
+       });
+    </script>
 </html>
