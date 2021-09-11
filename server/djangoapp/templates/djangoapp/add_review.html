@@ -107,20 +107,24 @@
                                                     </label>
                                                 </div>
                                             </div><br><br>
-											<div class="col-md-12">
-												<div class="form-group">
-													<select name="car" id="car" class="form-select" required>
-                                                    {% for car in cars %}
-                                                        <option value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
-                                                    {% endfor %}
-                                                </select>
-												</div>
-											</div>
-											<div class="col-md-12"> 
-												<div class="form-group">
-                                                    <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+											<div class="car-info" style="display:none">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="car"><b>Select your car <label style="color: rgb(189, 184, 184); font-size: smaller; ">(model-make-year)</label>:</b></label>
+                                                        <select name="car" id="car" class="form-select" required>
+                                                        {% for car in cars %}
+                                                            <option value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                                                        {% endfor %}
+                                                        </select>
+                                                    </div>
                                                 </div>
-											</div>
+                                                <div class="col-md-12"> 
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="car"><b>Select your purchase date:</b></label>
+                                                        <input class="date-own form-control" type="date" id="purchasedate" name="purchasedate" aria-describedby="date-format" placeholder="mm/dd/yyyy" />
+                                                    </div>
+                                                </div>
+                                            </div>
 										</div>
 									</form>
 								</div>
@@ -137,5 +141,14 @@
       $('.date-own').datepicker({
          format: 'mm/dd/yyyy'
        });
+       $(document).ready(function () {
+            $('#purchasecheck').change(function () {
+                if (this.checked) 
+                    $('.car-info').fadeIn('slow');
+                else 
+                    $('.car-info').fadeOut('slow');
+            });
+        });
     </script>
+    
 </html>
