@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import CarModel
-from .restapis import get_dealers_from_cf, get_dealers_by_state, get_dealer_reviews_from_cf, post_request
+from .restapis import get_dealers_from_cf, get_dealers_by_state, get_dealer_reviews_from_cf, post_request, get_reviews_max_id
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -20,6 +20,7 @@ base_url = "https://b32a16a9.eu-gb.apigw.appdomain.cloud/api"
 #Endpoints paths
 dealershipsPath = "/dealership"
 dealerReviewsPath = "/review"
+maxIdPath = "/maxid"
 
 # Create your views here.
 
@@ -134,8 +135,10 @@ def add_review(request, dealer_id):
         password = request.POST['pwd']
         user_exist = False
         review = dict()
-        review["id"] = 111
-        review["purchase_date"] = request.POST['']
+        review["id"] = get_reviews_max_id(base_url + maxIdPath) + 1
+        review["purchase"] = True
+        if review["purchase"] == True
+            review["purchase_date"] = request.POST['']
         review["car_make"] = request.POST['']
         review["car_model"] = request.POST['']
         review["car_year"] = request.POST['']

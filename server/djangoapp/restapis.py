@@ -188,3 +188,13 @@ def analyze_review_sentiments(dealer_review):
     return results
 
 
+def get_reviews_max_id(url, **kwargs):
+    maxId = 0
+    # Call get_request with a URL parameter
+    json_result = get_request(url)
+    
+    if "maxId" in json_result:
+        # Get the max id in reviews database
+        maxId = json_result['maxId']
+    
+    return maxId
