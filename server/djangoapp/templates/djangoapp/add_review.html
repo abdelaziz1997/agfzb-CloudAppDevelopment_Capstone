@@ -5,7 +5,7 @@
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{% static './custom/js/main.js' %}" type="text/javascript"></script>
     <script src="{% static './custom/js/jquery.sticky.js' %}" type="text/javascript"></script>
 
@@ -96,18 +96,18 @@
 										<div class="row">
                                             <div class="col-md-12">
 												<div class="form-group">
-													<textarea name="message" class="form-control" id="content" cols="30" rows="2" placeholder="your Review" required></textarea>
+													<textarea name="message" class="form-control" id="content" cols="30" rows="2" placeholder="Your Review" required></textarea>
 												</div>
                                             </div><br><br>
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="purchasecheck" name="purchasecheck">
-                                                    <label class="form-check-label" for="purchasecheck" style="color: rgb(39, 41, 43);">
+                                                    <input class="form-check-input" type="checkbox" value="" id="purchasecheck" name="purchasecheck" onclick="ShowHideDiv(this)">
+                                                    <label class="form-check-label" for="purchasecheck" style="color: rgb(39, 41, 43);" >
                                                         I have purchased this car before from this dealer. <label style="color: rgb(189, 184, 184); font-size: smaller; ">(choose purchased car information below if checked)</label>
                                                     </label>
                                                 </div>
                                             </div><br><br>
-											<div class="car-info" style="display:none">
+											<div id="dvCarInfo" style="display: none">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="form-label" for="car"><b>Select your car <label style="color: rgb(189, 184, 184); font-size: smaller; ">(model-make-year)</label>:</b></label>
@@ -124,7 +124,13 @@
                                                         <input class="date-own form-control" type="date" id="purchasedate" name="purchasedate" aria-describedby="date-format" placeholder="mm/dd/yyyy" />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div><br>
+                                            <div class="col-md-12">
+												<div class="form-group">
+													<input type="submit" value="Add Review" class="btn btn-custom">
+													<div class="submitting"></div>
+												</div>
+											</div>
 										</div>
 									</form>
 								</div>
@@ -137,18 +143,17 @@
 		</div>
 	</section>
     </body>
+    
     <script type="text/javascript">
       $('.date-own').datepicker({
          format: 'mm/dd/yyyy'
        });
-       $(document).ready(function () {
-            $('#purchasecheck').change(function () {
-                if (this.checked) 
-                    $('.car-info').fadeIn('slow');
-                else 
-                    $('.car-info').fadeOut('slow');
-            });
-        });
+    </script>
+    <script type="text/javascript">
+        function ShowHideDiv(purchasecheck) {
+            var dvCarInfo = document.getElementById("dvCarInfo");
+            dvCarInfo.style.display = purchasecheck.checked ? "block" : "none";
+        }
     </script>
     
 </html>

@@ -125,25 +125,29 @@ def add_review(request, dealer_id):
     if(request.method == "GET"):
         cars = CarModel.objects.filter(dealerId = dealer_id)
         context['cars'] = cars
-        print(cars)
         return render(request,'djangoapp/add_review.html', context)
-    review = dict()
-    review["id"] = 111
-    review["another"] = "field"
-    review["purchase_date"] = "02/16/2021"
-    review["car_make"] = "Audi"
-    review["car_model"] = "Car"
-    review["car_year"] = 2021
-    review["dealership"] = dealer_id
-    review["review"] = "This is a great car dealer"
-    review["purchase"] = False
-    review["name"] = "Abdelaziz El Hassouni"
-    json_payload = dict()
-    json_payload["review"] = review
-    print("IN THE VIEWS")
-    print(json_payload)
-    url = base_url + dealerReviewsPath
-    response = post_request(json_payload,url,dealerId = dealer_id)
-    return render(request,'djangoapp/add_review.html', context)
+    elif request.method == 'POST':
+        # Get user information from request.POST
+        username = request.POST['']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        password = request.POST['pwd']
+        user_exist = False
+        review = dict()
+        review["id"] = 111
+        review["purchase_date"] = request.POST['']
+        review["car_make"] = request.POST['']
+        review["car_model"] = request.POST['']
+        review["car_year"] = request.POST['']
+        review["dealership"] = dealer_id
+        review["review"] = request.POST['']
+        review["purchase"] = request.POST['']
+        review["name"] = request.POST['']
+        json_payload = dict()
+        json_payload["review"] = review
+        print(json_payload)
+        url = base_url + dealerReviewsPath
+        response = post_request(json_payload,url,dealerId = dealer_id)
+        return render(request,'djangoapp/add_review.html', context)
     
 
