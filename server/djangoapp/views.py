@@ -123,34 +123,31 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
     context = {}
-    if(request.method == "GET"):
+    if request.method == "GET":
         cars = CarModel.objects.filter(dealerId = dealer_id)
         context['cars'] = cars
+        context['dealer_id'] = dealer_id
         return render(request,'djangoapp/add_review.html', context)
-    elif request.method == 'POST':
-        # Get user information from request.POST
-        username = request.POST['']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        password = request.POST['pwd']
-        user_exist = False
+    elif request.method == "POST":
         review = dict()
         review["id"] = get_reviews_max_id(base_url + maxIdPath) + 1
-        review["purchase"] = True
-        if review["purchase"] == True
-            review["purchase_date"] = request.POST['']
-        review["car_make"] = request.POST['']
-        review["car_model"] = request.POST['']
-        review["car_year"] = request.POST['']
+        review["purchase"] = True if 'purchasecheck' in request.POST else False
+        review["review"] = request.POST['message']
         review["dealership"] = dealer_id
-        review["review"] = request.POST['']
-        review["purchase"] = request.POST['']
-        review["name"] = request.POST['']
+        review["name"] = request.user.first_name + " " + request.user.last_name
+        if review["purchase"] == True:
+            date_obj = datetime.strptime(request.POST['purchasedate'], '%Y-%m-%d')
+            formatedDate = date_obj.strftime("%m/%d/%Y")
+            review["purchase_date"] = str(formatedDate)
+            purchasedCar = get_object_or_404(CarModel, pk = request.POST['car'])
+            review["car_make"] = purchasedCar.make.name
+            review["car_model"] = purchasedCar.name
+            review["car_year"] = int(purchasedCar.year.strftime("%Y"))
         json_payload = dict()
         json_payload["review"] = review
         print(json_payload)
         url = base_url + dealerReviewsPath
         response = post_request(json_payload,url,dealerId = dealer_id)
-        return render(request,'djangoapp/add_review.html', context)
+        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
     
 

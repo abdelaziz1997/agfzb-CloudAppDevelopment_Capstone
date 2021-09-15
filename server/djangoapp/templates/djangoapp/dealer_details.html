@@ -45,7 +45,7 @@
 
               <nav class="site-navigation text-center ml-auto d-none d-lg-block" role="navigation" style="padding-left: 60px !important;">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li class="active"><a href="#" class="nav-link">Home</a></li>
+                  <li><a href="{% url 'djangoapp:index' %}" class="nav-link">Home</a></li>
                   <li><a href="{% url 'djangoapp:about' %}" class="nav-link">About Us</a></li>
                   <li><a href="{% url 'djangoapp:contact' %}" class="nav-link">Contact Us</a></li>
                 {% if user.is_authenticated %}

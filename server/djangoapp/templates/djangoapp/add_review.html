@@ -40,7 +40,7 @@
 
               <nav class="site-navigation text-center ml-auto d-none d-lg-block" role="navigation" style="padding-left: 60px !important;">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li class="active"><a href="#" class="nav-link">Home</a></li>
+                  <li><a href="{% url 'djangoapp:index' %}" class="nav-link">Home</a></li>
                   <li><a href="{% url 'djangoapp:about' %}" class="nav-link">About Us</a></li>
                   <li><a href="{% url 'djangoapp:contact' %}" class="nav-link">Contact Us</a></li>
                 {% if user.is_authenticated %}
@@ -92,7 +92,8 @@
                                     <div id="form-message-success" class="mb-4">
                                     Fill up the form to send your review 
                                     </div>
-									<form method="POST" id="reviewForm" name="reviewForm">
+									<form method="POST" id="reviewForm" name="reviewForm" action="{% url 'djangoapp:add_review' dealer_id %}">
+                                        {% csrf_token %}
 										<div class="row">
                                             <div class="col-md-12">
 												<div class="form-group">
@@ -101,7 +102,7 @@
                                             </div><br><br>
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="purchasecheck" name="purchasecheck" onclick="ShowHideDiv(this)">
+                                                    <input class="form-check-input" type="checkbox" id="purchasecheck" name="purchasecheck" onclick="ShowHideDiv(this)">
                                                     <label class="form-check-label" for="purchasecheck" style="color: rgb(39, 41, 43);" >
                                                         I have purchased this car before from this dealer. <label style="color: rgb(189, 184, 184); font-size: smaller; ">(choose purchased car information below if checked)</label>
                                                     </label>
