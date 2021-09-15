@@ -90,7 +90,7 @@
                 <a class="aboutus-more" href="{% url 'djangoapp:add_review' dealer_id %}" style="display:inline-block;float: right;">Add Review</a>
                 {% endif %}
             </div>
-        
+        {% if reviews %}
         <div class="card-columns">    
             {% for review in reviews %}
                 <div class="card">
@@ -98,13 +98,22 @@
                         <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" height="50px" width="50px">
                     </div>
                     <div class="card-body">
+                        {% if review.purchase == True %}
                         <h2 class="card-title">{{review.car_make}}, {{review.car_model}}</h2>
                         <h2 class="card-title">{{review.purchase_year}}</h2>
                         <p class="card-text" style="color: black;">{{review.review}}</p>
+                        {% elif review.purchase == False %}
+                        <p class="card-text" style="color: black;">{{review.review}}</p>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+        There is no reviews for the {{dealer_name}}.
+        </div>
+        {% endif %}
       </div>
       
     </body>

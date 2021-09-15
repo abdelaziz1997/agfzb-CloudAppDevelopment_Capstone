@@ -114,7 +114,9 @@ def get_dealer_details(request, dealer_id):
         # Get dealer's reviews from the URL
         dealerReviews = get_dealer_reviews_from_cf(base_url + dealerReviewsPath, dealer_id)
         # Return a list of dealer's reviews
-        context['reviews'] = dealerReviews
+        print(dealerReviews)
+        if 'error' not in dealerReviews:
+            context['reviews'] = dealerReviews
         context['dealer_id'] = dealer_id
         context['dealer_name'] = chosen_dealer.full_name
         return render(request,'djangoapp/dealer_details.html', context)

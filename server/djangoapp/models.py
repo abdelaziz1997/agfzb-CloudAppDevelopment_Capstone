@@ -79,5 +79,4 @@ class DealerReview:
         self.sentiment = sentiment
 
     def __str__(self):
-        return "Dealer name: " + self.name + "," + \
-               "Purchase year: " + self.purchase_year
+        return "Dealer name: " + self.name 

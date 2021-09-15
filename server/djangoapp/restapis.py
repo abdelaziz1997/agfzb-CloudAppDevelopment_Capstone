@@ -21,7 +21,7 @@ def get_request(url, **kwargs):
             print(params)
             print(kwargs.get("api_key"))
             response = requests.get(url, 
-                                    headers={'Content-Type': 'application/json'}, 
+                                    headers={'Content-Type': 'application/json', 'X-Debug-Mode':'true'}, 
                                     params=params,
                                     auth=HTTPBasicAuth("apikey",str(kwargs.get("api_key"))))
             print("RESPONSEEEEEEE")
@@ -30,7 +30,7 @@ def get_request(url, **kwargs):
             # Without Authentication
             print("NOOOOOO API_KEEEEEEY")
             response = requests.get(url, 
-                                    headers={'Content-Type': 'application/json'}, 
+                                    headers={'Content-Type': 'application/json', 'X-Debug-Mode':'true'}, 
                                     params=kwargs)
         status_code = response.status_code
         print("With status {} ".format(status_code))
@@ -42,7 +42,7 @@ def get_request(url, **kwargs):
         print("Network exception occurred")
         return{'error':"Network Error"}
         
-
+        
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
 def post_request(json_payload , url, **kwargs):
@@ -135,17 +135,30 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             # For each dealer object
             for review in reviews:
                 # Create a CarDealer object with values in `doc` object
-                review_obj = DealerReview( dealership=review["dealership"], 
-                                        name=review["name"], 
-                                        purchase=review["purchase"],
-                                        id=review["id"], 
-                                        review=review["review"], 
-                                        purchase_date=review["purchase_date"],
-                                        purchase_year=review["purchase_year"],
-                                        car_make=review["car_make"],
-                                        car_model=review["car_model"], 
-                                        car_year=review["car_year"],
-                                        sentiment=analyze_review_sentiments(review["review"]))
+                if review["purchase"] == True:
+                    review_obj = DealerReview( dealership=review["dealership"], 
+                                            name=review["name"], 
+                                            purchase=review["purchase"],
+                                            id=review["id"], 
+                                            review=review["review"], 
+                                            purchase_date=review["purchase_date"],
+                                            purchase_year=review["purchase_year"],
+                                            car_make=review["car_make"],
+                                            car_model=review["car_model"], 
+                                            car_year=review["car_year"],
+                                            sentiment=analyze_review_sentiments(review["review"]))
+                elif review["purchase"] == False:
+                    review_obj = DealerReview( dealership=review["dealership"], 
+                                            name=review["name"], 
+                                            purchase=review["purchase"],
+                                            id=review["id"], 
+                                            review=review["review"], 
+                                            purchase_date=None,
+                                            purchase_year=None,
+                                            car_make=None,
+                                            car_model=None, 
+                                            car_year=None,
+                                            sentiment=analyze_review_sentiments(review["review"]))
                 results.append(review_obj)
         else : 
             return {"error": "The dealership doesn't have any reviews"}
@@ -156,16 +169,16 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(dealer_review):
-    results = "heelo"
-    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/ce05314f-896d-4384-bdc5-9b0c815796b4"
+    results = ""
+    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/32bf0015-5a09-43ba-a6bb-2cad481569be"
 
     
     # Call get_request with a URL parameter and Watson NLU parameters
-    json_result = get_request(api_url,  api_key="FXkmOfL3GZCCjhPaHustbo5Wvg4akSwBRWBwxR76h892",
+    json_result = get_request(api_url,  api_key="gXFO_eq2a0tdKUYUXzA8lbnyw7xVWCpUwJ4zjurCxeMj",
                                         version="2021-05-24",
                                         text=dealer_review,
                                         features="sentiment",
-                                        return_analyzed_text=False)
+                                        return_analyzed_text=True)
     if json_result:
         print(json_result)
         # Get the row list in JSON as dealers
@@ -185,7 +198,7 @@ def analyze_review_sentiments(dealer_review):
                                     #sentiment=review['name'])
             #results.append(review_obj)
 
-    return results
+    return json_result
 
 
 def get_reviews_max_id(url, **kwargs):
