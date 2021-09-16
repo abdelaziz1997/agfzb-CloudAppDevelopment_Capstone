@@ -13,6 +13,7 @@ def get_request(url, **kwargs):
     try:
         if "api_key" in kwargs:
             # With Authentication
+            print("API_KEEEEEEY")
             params = dict()
             params["text"] = kwargs.get("text")
             params["version"] = kwargs.get("version")
@@ -169,36 +170,23 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(dealer_review):
-    results = ""
-    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/32bf0015-5a09-43ba-a6bb-2cad481569be"
+    api_url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/61ea925f-b9e8-41c3-9e9a-b0b7eb150720/v1/analyze?version=2021-05-24"
 
     
     # Call get_request with a URL parameter and Watson NLU parameters
-    json_result = get_request(api_url,  api_key="gXFO_eq2a0tdKUYUXzA8lbnyw7xVWCpUwJ4zjurCxeMj",
+    json_result = get_request(api_url,  api_key="RtXdBaaJb_yaBAqBSSgx45DfTx9i_SueMCdVTvpRELsw",
                                         version="2021-05-24",
                                         text=dealer_review,
                                         features="sentiment",
                                         return_analyzed_text=True)
-    if json_result:
+    if "sentiment" in json_result:
         print(json_result)
-        # Get the row list in JSON as dealers
-        #reviews = json_result["docs"]
-        # For each dealer object
-        #for review in reviews:
-            # Create a CarDealer object with values in `doc` object
-            #review_obj = DealerReview( dealership=review["dealership"], 
-                                    #name=review["name"], 
-                                    #purchase=review["purchase"],
-                                    #id=review["id"], 
-                                    #review=review["review"], 
-                                    #purchase_date=review["purchase_date"],
-                                    #car_make=review["car_make"],
-                                    #car_model=review["car_model"], 
-                                    #car_year=review["car_year"],
-                                    #sentiment=review['name'])
-            #results.append(review_obj)
-
-    return json_result
+        # Get sentiment Object from the result
+        sentiment_obj = json_result['sentiment']
+        sentiment = sentiment_obj['document']['label']
+        return sentiment
+    else:
+        return None
 
 
 def get_reviews_max_id(url, **kwargs):
