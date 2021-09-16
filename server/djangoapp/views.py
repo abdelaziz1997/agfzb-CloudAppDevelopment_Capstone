@@ -33,7 +33,10 @@ def about(request):
 
 # Create a `contact` view to return a static contact page
 def contact(request):
-    return render(request, 'djangoapp/contact.html')
+    context = {}
+    if request.method == "POST":
+        context['message'] = "Your message has been sent."
+    return render(request, 'djangoapp/contact.html', context)
 
 
 # Create a `login_request` view to handle sign in request

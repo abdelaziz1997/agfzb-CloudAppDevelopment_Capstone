@@ -96,29 +96,33 @@
 								<div class="contact-wrap w-100 p-md-5 p-4">
 									<h3 class="mb-4 aboutus-title">Contact Us</h3>
 									<div id="form-message-warning" class="mb-4"></div> 
-				      		<div id="form-message-success" class="mb-4">
-				            Your message was sent, thank you!
-				      		</div>
-									<form method="POST" id="contactForm" name="contactForm">
-										<div class="row">
+                                    {% if message %}
+                                    <div class="alert alert-success" role="alert">
+                                        {{message}}
+                                    </div>
+                                    {% endif %}
+                                    
+									<form method="POST" id="contactForm" name="contactForm" action="{% url 'djangoapp:contact' %}">
+                                        {% csrf_token %}
+                                        <div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<input type="text" class="form-control" name="name" id="name" placeholder="Name">
+													<input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
 												</div>
 											</div>
 											<div class="col-md-6"> 
 												<div class="form-group">
-													<input type="email" class="form-control" name="email" id="email" placeholder="Email">
+													<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
 												</div>
 											</div>
 											<div class="col-md-12">
 												<div class="form-group">
-													<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+													<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
 												</div>
 											</div>
 											<div class="col-md-12">
 												<div class="form-group">
-													<textarea name="message" class="form-control" id="message" cols="30" rows="7" placeholder="Message"></textarea>
+													<textarea name="message" class="form-control" id="message" cols="30" rows="7" placeholder="Message" required></textarea>
 												</div>
 											</div>
 											<div class="col-md-12">

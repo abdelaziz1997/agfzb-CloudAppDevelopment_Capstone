@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Submit Review - Best Cars Dealership</title>
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
@@ -112,7 +113,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="form-label" for="car"><b>Select your car <label style="color: rgb(189, 184, 184); font-size: smaller; ">(model-make-year)</label>:</b></label>
-                                                        <select name="car" id="car" class="form-select" required>
+                                                        <select name="car" id="car" class="form-select">
                                                         {% for car in cars %}
                                                             <option value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
                                                         {% endfor %}
